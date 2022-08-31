@@ -10,16 +10,16 @@ const Home = (dentist) => {
     console.log(sickDentist);
   };
 
-  return dentist.dentists.map((dentist) => (
+  return dentist.dentist.map((dts) => (
     <div>
       <li style={{ listStyle: "none", fontSize: 20 }}>
-        <button value={dentist.id} onClick={handleOnClick}>
+        <button value={dts.id} onClick={handleOnClick}>
           sick
         </button>
         <label>
           {"  "}
-          {dentist.name}
-          {dentist.surname}
+          {dts.name}
+          {dts.surname}
         </label>
       </li>
     </div>

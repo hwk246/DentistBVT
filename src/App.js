@@ -10,9 +10,9 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      dentists: [{ name: "", surname: "" }],
-      assistants: [{ name: "not needed", surname: "" }],
-      patients: [],
+      dentist: [{ name: "", surname: "" }],
+      assistant: [{ name: "not needed", surname: "" }],
+      patient: [],
       appointments: [],
     };
   }
@@ -28,20 +28,21 @@ class App extends React.Component {
       dentists: [],
     });
 
-    const initialState = [{ dentists: 4 }, { assitants: 2 }, { clients: 50 }];
+    const initialState = [{ dentist: 4 }, { assistant: 2 }, { patient: 50 }];
 
     initialState.forEach((element) => {
-      const key = Object.keys(element);
-      const value = Object.values(element);
+      const key = Object.keys(element)[0];
+      const value = Object.values(element)[0];
 
       for (let i = 0; i < value; i++)
         this.setState({
           ...this.state,
           [key]: [
-            ...this.state.dentists,
-            personsMockData[Math.floor(Math.random() * value)],
+            ...this.state[key],
+            personsMockData[Math.floor(Math.random() * 250)],
           ],
         });
+      // console.log(this.state);
     });
 
     for (let i = 0; i < 150; i++) {
@@ -51,22 +52,22 @@ class App extends React.Component {
       });
     }
 
-    // console.log(this.state.appointments);
-    // console.log(this.state.dentists);
+    console.log(this.state.appointments);
+    console.log(this.state.dentist);
   }
 
   randomDentist = () => {
-    const dentist = this.state.dentists[Math.floor(Math.random() * 4)];
+    const dentist = this.state.dentist[Math.floor(Math.random() * 4)];
     return `${dentist.name} ${dentist.surname}`;
   };
 
   randomAssitant = () => {
-    const assistant = this.state.assistants[Math.floor(Math.random() * 3)];
+    const assistant = this.state.assistant[Math.floor(Math.random() * 3)];
     return `${assistant.name} ${assistant.surname}`;
   };
 
   randomPatient = () => {
-    const patient = this.state.patients[Math.floor(Math.random() * 50)];
+    const patient = this.state.patient[Math.floor(Math.random() * 50)];
     return `${patient.name} ${patient.surname}`;
   };
 
@@ -124,7 +125,7 @@ class App extends React.Component {
                 <label />
                 Dentist report sick
                 <ul>
-                  <Home dentists={this.state.dentists} />
+                  <Home dentist={this.state.dentist} />
                 </ul>
               </Route>
             </Switch>
