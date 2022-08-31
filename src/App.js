@@ -28,32 +28,21 @@ class App extends React.Component {
       dentists: [],
     });
 
-    for (let i = 0; i < 4; i++)
-      this.setState({
-        ...this.state,
-        dentists: [
-          ...this.state.dentists,
-          personsMockData[Math.floor(Math.random() * 250)],
-        ],
-      });
+    const initialState = [{ dentists: 4 }, { assitants: 2 }, { clients: 50 }];
 
-    for (let i = 0; i < 2; i++)
-      this.setState({
-        ...this.state,
-        assistants: [
-          ...this.state.assistants,
-          personsMockData[Math.floor(Math.random() * 250)],
-        ],
-      });
+    initialState.forEach((element) => {
+      const key = Object.keys(element);
+      const value = Object.values(element);
 
-    for (let i = 0; i < 50; i++)
-      this.setState({
-        ...this.state,
-        patients: [
-          ...this.state.patients,
-          personsMockData[Math.floor(Math.random() * 250)],
-        ],
-      });
+      for (let i = 0; i < value; i++)
+        this.setState({
+          ...this.state,
+          [key]: [
+            ...this.state.dentists,
+            personsMockData[Math.floor(Math.random() * value)],
+          ],
+        });
+    });
 
     for (let i = 0; i < 150; i++) {
       this.setState({
