@@ -4,37 +4,39 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./Home";
 import Calendar from "./Calendar";
 import Day from "./Day";
+import { names } from "./utils";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      dentist: [{ name: "", surname: "" }],
+      dentist: [],
       assistant: [{ name: "not needed", surname: "" }],
       patient: [],
       appointments: [],
     };
   }
 
-  async componentDidMount() {
-    const requestData = await fetch(
-      "https://api.mockaroo.com/api/00604490?count=250&key=19243a80"
-    );
-    const personsMockData = await requestData.json();
+  // async //
+  componentDidMount() {
+    // const requestData = await fetch(
+    //   "https://api.mockaroo.com/api/00604490?count=250&key=19243a80"
+    // );
+    // const personsMockData = await requestData.json();
 
-    this.setState({
-      ...this.state,
-      dentists: [],
-    });
+    ////////
+    const personsMockData = names;
+    console.log(personsMockData);
 
     const initialState = [{ dentist: 4 }, { assistant: 2 }, { patient: 50 }];
 
-    initialState.forEach((element) => {
-      const key = Object.keys(element)[0];
-      const value = Object.values(element)[0];
+    setTimeout(() => {
+      initialState.forEach((element) => {
+        const key = Object.keys(element)[0];
+        const value = Object.values(element)[0];
 
-      for (let i = 0; i < value; i++)
+        for (let i = 0; i < value; i++) console.log(this.state);
         this.setState({
           ...this.state,
           [key]: [
@@ -42,18 +44,15 @@ class App extends React.Component {
             personsMockData[Math.floor(Math.random() * 250)],
           ],
         });
-      // console.log(this.state);
-    });
-
-    for (let i = 0; i < 150; i++) {
-      this.setState({
-        ...this.state,
-        appointments: [...this.state.appointments, this.randomAppointment()],
       });
-    }
 
-    console.log(this.state.appointments);
-    console.log(this.state.dentist);
+      for (let i = 0; i < 150; i++) {
+        this.setState({
+          ...this.state,
+          appointments: [...this.state.appointments, this.randomAppointment()],
+        });
+      }
+    }, 2000);
   }
 
   randomDentist = () => {
@@ -63,6 +62,7 @@ class App extends React.Component {
 
   randomAssitant = () => {
     const assistant = this.state.assistant[Math.floor(Math.random() * 3)];
+
     return `${assistant.name} ${assistant.surname}`;
   };
 
@@ -91,6 +91,15 @@ class App extends React.Component {
     dentist: this.randomDentist(),
     assistant: this.randomAssitant(),
   });
+
+  handleSickReport = () => {
+    console.log("even wachten...");
+    // this.setState((prev) => ({
+    //   dentist: prev.dentists.map((eachItem) => {
+    //     return { ...eachItem, sick: true };
+    //   }),
+    // }));
+  };
 
   render() {
     return (
@@ -125,7 +134,10 @@ class App extends React.Component {
                 <label />
                 Dentist report sick
                 <ul>
-                  <Home dentist={this.state.dentist} />
+                  <Home
+                    dentist={this.state.dentist}
+                    sickReport={this.handleSickReport}
+                  />
                 </ul>
               </Route>
             </Switch>
