@@ -1,30 +1,14 @@
 import React from "react";
 import "./App.css";
-import { useState } from "react";
 
-const Home = (props) => {
-  const [sickDentist, setSickDentist] = useState("");
+const style = { width: "140px", color: "blue", cursor: "pointer" };
 
-  const handleOnClick = (e) => {
-    setSickDentist({ sick: true, id: e.target.value });
-    props.sickReport(sickDentist);
-  };
-
-  return props.dentist.map((person) => (
-    <div>
-      <li style={{ listStyle: "none", fontSize: 20 }}>
-        <button value={person.id} onClick={handleOnClick}>
-          sick
-        </button>
-        <label style={{ color: "#bdbdbd" }}>
-          {"  "}
-          {person.name}
-          {"  "}
-          {person.surname}
-        </label>
-      </li>
+export default ({ bvtDentists, sick, lijst }) => {
+  return bvtDentists.map((element, index) => (
+    <div key={index}>
+      <button onClick={() => sick(element.id)}>
+        {element.name} {element.surname}
+      </button>
     </div>
   ));
 };
-
-export default Home;

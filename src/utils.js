@@ -1751,8 +1751,23 @@ const names = [
   },
 ];
 
-const getRandomName = () => {
-  const person = names[Math.floor(Math.random() * 250)];
+const getInitialPersons = (number) => {
+  const newArray = [];
+  let i = 0;
+  while (i < number) {
+    const initialName = names[Math.floor(Math.random() * 250)];
+    newArray.push(initialName);
+    i++;
+  }
+  return newArray;
+};
+
+export const dentistArray = getInitialPersons(4);
+export const assistantArray = getInitialPersons(2);
+export const patientArray = getInitialPersons(50);
+
+const getRandomName = (typeOfPerson, number) => {
+  const person = typeOfPerson[Math.floor(Math.random() * number)];
   return `${person.name} ${person.surname}`;
 };
 
@@ -1771,17 +1786,14 @@ const getRandomDay = () => Math.floor(Math.random() * 28) + 1;
 const generateRandomAppointment = () => ({
   day: getRandomDay(),
   time: getRandomTime(),
-  patient: getRandomName(),
-  dentist: getRandomName(),
-  assistant: getRandomName(),
+  dentist: getRandomName(dentistArray, 4),
+  assistant: getRandomName(assistantArray, 2),
+  patient: getRandomName(patientArray, 50),
 });
 
-let generateRandomAppointments = (num) =>
+const generateRandomAppointments = (num) =>
   Array(num)
     .fill(0)
     .map((_) => generateRandomAppointment());
 
-console.log(generateRandomAppointments);
-
 export default generateRandomAppointments;
-export { names };
